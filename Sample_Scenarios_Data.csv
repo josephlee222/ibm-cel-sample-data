@@ -1,0 +1,71 @@
+Scenarios,CEL-like Attribute Rule
+Get user emails array,user.emails
+Get the first email object in the array of emails,user.emails[0]
+"Get the first email type (for example work, personal email addresses)",user.emails[0].type
+Get the value of the first email,user.emails[0].value
+Get user addresses array,user.addresses
+Get the first address object in the array of addresses,user.addresses[0]
+Get the second address object in the array of addresses,user.addresses[1]
+Get the first address country,user.addresses[0].country
+Get the first address street address,user.addresses[0].streetAddress
+Get the first address formatted address,user.addresses[0].formatted
+Get the first address postal code,user.addresses[0].postalCode
+Get the first address locality (city),user.addresses[0].locality
+"Get the first address type (for example work, personal addresses)",user.addresses[0].type
+Get the first address region (state),user.addresses[0].region
+Get array of groups that the user is included,user.groups
+Get the first group object in the array of groups,user.groups[0]
+Get the first group display name,user.groups[0].displayName
+Get the first group website reference (for users to view the front-end page),user.groups[0].$ref
+Get the first group value (Group ID),user.groups[0].value
+Get user array of phone numbers,user.phoneNumbers
+Get the first phone number object in the array of phone numbers,user.phoneNumbers[0]
+"Get the first phone number type (for example work, personal phone number)",user.phoneNumbers[0].type
+Get the value of the first phone number (actual phone number to call),user.phoneNumbers[0].value
+Get the user created date,user.meta.created
+Convert the user created date into a epoch timestamp,timestamp(user.meta.created)
+Convert the user created date into a human-readable date and time,"formatTime(timestamp(user.meta.created), 'Monday, 02-Jan-06 15:04:05 MST')"
+Get the profile page URL for the user,user.meta.location
+Get the user last modified date,user.meta.lastModified
+Convert the user last modified date into a epoch timestamp,timestamp(user.meta.lastModified)
+Convert the user last modified date into a human-readable date and time,"formatTime(timestamp(user.meta.lastModified), 'Monday, 02-Jan-06 15:04:05 MST')"
+Get the resource type (can be user or application),user.meta.resourceType
+Get user family name,user.name.familyName
+Get user given name,user.name.givenName
+Get user middle name,user.name.middleName
+Get user formatted/full name (given name + middle name + family name),user.name.formatted
+Get manager in charge of the user (The function will return a simliar object to the user which can be read and functions related to the user object can be called as well),user.getManager()
+Get department user is assigned to,"user[""urn:ietf:params:scim:schemas:extension:enterprise:2.0:User""].department"
+Get user employee number,"user[""urn:ietf:params:scim:schemas:extension:enterprise:2.0:User""].employeeNumber"
+Get job title,user.title
+Get user last login timestamp,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].lastLogin"
+Get the realm used for the last login,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].lastLoginRealm"
+Get the user category which the user is in,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].userCategory"
+Check whether user has two-factor authentication (2FA) enabled,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].twoFactorAuthentication"
+Get the realm where this user account is created from,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].realm"
+Get the timestamp of the most recent password change,"user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].pwdChangedTime"
+Check whether the last password change is more than a certain number of days (in this case: 30 days),"(timestamp(user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].pwdChangedTime) + duration('2592000s')) < timestamp(now)"
+"Get the login type of the last login (password, social login, etc...)","user[""urn:ietf:params:scim:schemas:extension:ibm:2.0:User""].lastLoginType"
+Get user ID,user.id
+Get account active status,user.active
+Get user username used for login,user.username
+get user preferred language (ISO language code for example - en-US),user.preferredLanguage
+Get user work mode custom attribute,"user.getCustomValue(""workMode"")"
+Get whether user is a manager based on whether the user has any users with the manager UID (boolean output),"findUsers('urn:ietf:params:scim:schemas:extension:enterprise:2.0:User:manager.value eq ""' + user.id + '""' , [""emails"", ""name.givenName""], 1).result.size() > 0"
+[Multi-line rule] Get user work location coodinates based on a readable building address using arcGIS geocoder service (multi-string output),"statements:
+    - if:
+        match: has(user.addresses)
+        block:
+            - context: url := ""https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine="" + user.addresses[0].formatted + ""&category=&outFields=*&forStorage=false&f=pjson""
+            - context: geolocateRequest := hc.GetAsJson(encodeURI(context.url), {})
+            - context: location := [context.geolocateRequest.candidates[0].location.x, context.geolocateRequest.candidates[0].location.y]
+            - return: context.location
+    - return: string(""Not Available"")"
+[Multi-line rule] Check whether user is inside the admin group (boolean),"statements:
+    - if:
+        match: has(user.groups)
+        block:
+            - return: user.groups.filter(x, x.displayName == ""admin"").size() > 0
+    
+    - return: false"
+"Check whether the user is created before a certain date, in this case, before 7th march 2024 (boolean)","timestamp(user.meta.created) < timestamp(""2024-03-07T00:00:00Z"")"

@@ -1,0 +1,87 @@
+Object Name,Object Sample
+Sample User Object with all details,"{
+	""user"": {
+		""addresses"": [
+			{
+				""country"": ""Singapore"",
+				""streetAddress"": ""Yishun Street 72"",
+				""formatted"": ""Block 765, Yishun Street 72, Singapore 760765"",
+				""postalCode"": ""760765"",
+				""locality"": ""Singapore"",
+				""type"": ""work"",
+				""region"": ""Singapore""
+			}
+		],
+		""preferredLanguage"": ""en-us"",
+		""urn:ietf:params:scim:schemas:extension:ibm:2.0:User"": {
+			""lastLogin"": ""2024-03-07T07:58:25Z"",
+			""lastLoginRealm"": ""cloudIdentityRealm"",
+			""userCategory"": ""regular"",
+			""twoFactorAuthentication"": false,
+			""realm"": ""cloudIdentityRealm"",
+			""pwdChangedTime"": ""2024-03-06T02:44:05Z"",
+			""customAttributes"": [
+				{
+					""values"": [
+						""Hybrid""
+					],
+					""name"": ""course""
+				}
+			],
+			""lastLoginType"": ""user_password""
+		},
+		""groups"": [
+			{
+				""displayName"": ""admin"",
+				""id"": ""6090019MN3"",
+				""$ref"": ""https://sgsl-intern.dev.verify.ibmcloudsecurity.com/v2.0/Groups/6090019MN3"",
+				""value"": ""6090019MN3""
+			}
+		],
+		""active"": true,
+		""userName"": ""scott"",
+		""title"": ""Software Engineer"",
+		""phoneNumbers"": [
+			{
+				""type"": ""work"",
+				""value"": ""93876421""
+			},
+			{
+				""type"": ""mobile"",
+				""value"": ""93876421""
+			}
+		],
+		""urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"": {
+			""manager"": {
+				""value"": ""6090019MN9"",
+				""$ref"": ""https://sgsl-intern.dev.verify.ibmcloudsecurity.com/v2.0/Users/6090019MN9""
+			},
+			""department"": ""2LY"",
+			""employeeNumber"": ""1""
+		},
+		""emails"": [
+			{
+				""type"": ""work"",
+				""value"": ""rajeev.kumar@sg.ibm.com""
+			}
+		],
+		""meta"": {
+			""created"": ""2024-03-06T02:42:00Z"",
+			""location"": ""https://sgsl-intern.dev.verify.ibmcloudsecurity.com/v2.0/Users/6090019MND"",
+			""lastModified"": ""2024-03-07T08:03:46Z"",
+			""resourceType"": ""User""
+		},
+		""schemas"": [
+			""urn:ietf:params:scim:schemas:core:2.0:User"",
+			""urn:ietf:params:scim:schemas:extension:ibm:2.0:User"",
+			""urn:ietf:params:scim:schemas:extension:enterprise:2.0:User""
+		],
+		""name"": {
+			""formatted"": ""Scott Tom Sean"",
+			""familyName"": ""Sean"",
+			""givenName"": ""Scott"",
+			""middleName"": ""Tom""
+		},
+		""id"": ""6090019MND""
+	}
+}"
