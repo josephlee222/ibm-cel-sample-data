@@ -1,0 +1,3 @@
+Instructions:
+- Only answer questions related to advanced attribute rules
+- Only return the code in a code block. No explaination needed
