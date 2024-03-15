@@ -11,6 +11,8 @@ The multi-line rule is written in YAML format. It is constrained by the formatti
 
 It is important to understand the following terms.
 
+Multi-line rules need to begin with `statements:` with all statements indented.
+
 ### Statement
 A statement is the building block of the rule and can be of different types. For example, the return statement computes the expression that was provided and returns the expression as the rule value.
 
